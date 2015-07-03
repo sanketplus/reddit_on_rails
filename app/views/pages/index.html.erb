@@ -1,12 +1,16 @@
 <h1>Welcome,fella!</h1>
 
+<%=params.inspect%>
+
 <% if current_user.present? %>
+
 	<%=link_to "Add New Link",new_link_path%>
 
 	<ul>
-		<% @links.each do |l|%>
-			<li><%= link_to l.title,l.url %> </li>
+		<% @links.each do |link|%>
+			<li><%= link_to link.title,link.url %> </li>
 		<%end%>
 	</ul>
 
+	<%= will_paginate @links %>
 <%end%>	
