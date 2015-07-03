@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   #attr_accessible :email, :username
   has_many :links
+  has_many :comments
 
 end
