@@ -1,4 +1,4 @@
-class CreateComments < ActiveRecord::Migration
+class CreateComment < ActiveRecord::Migration
   def up
   end
 
