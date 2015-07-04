@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 resources :pages
 resources :links
 resources :comments, :only => [:create]
+get 'votes/' => 'votes#create'
 resources :votes, :only => [:create,:index]
 root :to => "pages#index"
   # The priority is based upon order of creation: first created -> highest priority.
