@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'will_paginate', '~> 3.0.6'
+gem 'rails_serve_static_assets'
 
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
