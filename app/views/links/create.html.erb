@@ -1,5 +1,5 @@
 create page
 
-<%= params[:link].inspect %>
 <br/>
 Your Link:<%= link_to @link.title, @link.url %>
+<br><%=link_to "Go Back", pages_path%>

@@ -1,23 +1,23 @@
 <h1>Welcome,fella!</h1>
 
-<%=params.inspect%>
 
 <% if current_user.present? %>
 
 	<%=link_to "Add New Link",new_link_path%>
 
+<%end%>	
 	<ul>
 		<% @links.each do |link|%>
 			<li>
 				<%if current_user && current_user.votes.where(:link_id => link.id, :up => true).present?%>
 					*
-				<%else%>
+				<%elsif current_user.present?%>
 					<%= link_to "+",votes_path(:vote=>{:link_id => link.id,:up=> TRUE}), :method => :post %> 
 				<%end%>
 
 				<%if current_user && current_user.votes.where(:link_id => link.id, :up => false).present?%>
 					*
-				<%else%>
+				<%elsif current_user.present?%>
 					<%= link_to "-",votes_path(:vote=>{:link_id => link.id,:up=> FALSE}), :method => :pos%>  
 				<%end%>
 
@@ -29,4 +29,3 @@
 	</ul>
 
 	<%= will_paginate @links %>
-<%end%>	
