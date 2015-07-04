@@ -8,9 +8,23 @@
 
 	<ul>
 		<% @links.each do |link|%>
-			<li><%= link_to "+",votes_path(:vote=>{:link_id => link.id,:up=> TRUE}), :method => :post %> <%= link_to "-",votes_path(:vote=>{:link_id => link.id,:up=> FALSE}), :method => :post %> Votes: Votes: <%= link.votes.where(:up => true).count - link.votes.where(:up => false).count %>
+			<li>
+				<%if current_user && current_user.votes.where(:link_id => link.id, :up => true).present?%>
+					*
+				<%else%>
+					<%= link_to "+",votes_path(:vote=>{:link_id => link.id,:up=> TRUE}), :method => :post %> 
+				<%end%>
+
+				<%if current_user && current_user.votes.where(:link_id => link.id, :up => false).present?%>
+					*
+				<%else%>
+					<%= link_to "-",votes_path(:vote=>{:link_id => link.id,:up=> FALSE}), :method => :pos%>  
+				<%end%>
+
+				Votes: <%= link.votes.where(:up => true).count - link.votes.where(:up => false).count %>
 				<br>
-				<%= link_to link.title,link.url %> | <%= link_to "comments", link %></li>
+				<%= link_to link.title,link.url %> | <%= link_to "comments", link %>
+			</li>
 		<%end%>
 	</ul>
 
