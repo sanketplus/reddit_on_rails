@@ -1,25 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8">
   <title>RedditOnRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
- 
- 
-<% if current_user.present? %>
-	<%= link_to "Logout", destroy_user_session_path, :method => :delete %>
-<% else %>
-	<%= link_to "Login", new_user_session_path %> |
-	<%= link_to "Register", new_user_registration_path%>
-<%end%>
+
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= csrf_meta_tags %>
 
 
-<%= yield %>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-</body>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+
+    <script src="http://heroku.github.com/template-app-bootstrap/jquery-1.7.1.min.js"></script>
+    <script src="http://heroku.github.com/template-app-bootstrap/jquery.replacetext.min.js"></script>
+
+    <!--
+      IMPORTANT:
+      This is Heroku specific styling. Remove to customize.
+    -->
+    <link href="http://heroku.github.com/template-app-bootstrap/heroku.css" rel="stylesheet">
+    <!-- /// -->
+
+    <!--
+      IMPORTANT:
+      To do the replacement  example for the real name application
+    -->
+    <script src="http://heroku.github.com/template-app-bootstrap/heroku.js"></script>
+    <!-- /// -->
+
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="/" class="brand">Reddit on Rails</a>
+          <div class='nav-collapse'>
+            <ul class='nav'>
+              <%# user is logged in, show log out link %>
+              <% if current_user.present? %>
+                <li><%= link_to 'Sign Out', destroy_user_session_path, :method => :delete %></li>
+              <%# user is not logged in, show signup and login links %>
+              <% else %>
+                <li><%= link_to 'Sign In', new_user_session_path %></li> |
+                <li><%= link_to 'Register Now!', new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </div>
+          <!--
+            IMPORTANT:
+            This is Heroku specific markup. Remove to customize.
+          -->
+          <a href="/" class="brand" id="heroku">by <strong>heroku</strong></a>
+          <!-- /// -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="getting-started">
+      <div class="row">
+        <div class="span6 offset2">
+        <div class="page-header"></div>
+          	
+          	<% [:notice, :error, :alert].each do |level| %>
+			  <% unless flash[level].blank? %>
+			    <div data-alert="alert" class="alert alert-<%= level %> fade in">
+			      <a class="close" data-dismiss="alert" href="#">&times;</a>
+			      <%= content_tag :p, flash[level] %>
+			    </div>
+			  <% end %>
+			<% end %>
+
+				 <% if content_for?(:sidebar) %>
+				  <div class="span2">
+				    <div class="page-header"></div>
+				    <h2>Sidebar</h2>
+				    <%= yield :sidebar %>
+				  </div>
+				<% end %>
+				
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <%= javascript_include_tag "application" %>
+  </body>
 </html>
